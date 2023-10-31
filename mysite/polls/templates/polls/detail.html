@@ -1,0 +1,17 @@
+<form action='#' method="post"> <!--설문 조사를 할 경우 다음 action="#" 여기에 모션이 들어가게 될 것이다.-->
+    {% csrf_token %} <!--추가된 토큰(기본적으로 제공되는 토큰이다.)-->
+    <h1>
+        {{question.question_text}}
+    </h1>
+    {% if error_message %} <!--만약 error_message가 존재한다면 error_message를 보여 준다-->
+    <p><strong>{{error_message}}</strong></p>
+    {% endif %}
+    {% for choice in question.choice_set.all %}
+    <input type="radio" name="choice" id="choice{{ forloop.counter}}" value="{{choice.id}}">
+    <label for="choice{{forloop.counter}}">
+        {{choice.choice_text}}
+    </label>
+    <br>
+    {% endfor %}
+    <input type="submit" value="Vote">
+</form>
