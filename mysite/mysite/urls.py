@@ -19,5 +19,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("polls/", include('polls.urls')) #만약 polls라는 requestURL을 받으면 polls.urls에서 처리해 주도록 전달
+    path("polls/", include('polls.urls')), #만약 polls라는 requestURL을 받으면 polls.urls에서 처리해 주도록 전달
+    path('rest/', include('polls_api.urls')),
 ]
