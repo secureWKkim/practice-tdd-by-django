@@ -8,6 +8,7 @@ from django.contrib import admin
 class Question(models.Model):
     question_text = models.CharField(max_length=200, verbose_name='질문')
     pub_date = models.DateTimeField(auto_now_add=True, verbose_name='생성일')
+    owner = models.ForeignKey('auth.User', related_name='questions', on_delete=models.CASCADE, null=True) #owner이 삭제가 되면 Question도 다 삭제한다라는 뜻
 
     """
     [@admin.display 데코레이터에 대해]

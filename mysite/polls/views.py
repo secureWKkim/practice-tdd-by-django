@@ -3,8 +3,12 @@ from .models import *
 # template으로 그려 주기 위해서 render 메서드 사용
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, Http404, HttpResponseRedirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.db.models import F
+# rest_framework에서 제공하는 generics와 비슷한 역할
+from django.views import generic
+# UserCreationForm는 Form을 일일이 작업하지 않아도 User 생성을 위한 Form을 만들어 준다.
+from django.contrib.auth.forms import UserCreationForm
 
 
 def index(request):
@@ -43,3 +47,10 @@ def vote(request, question_id):
 def result(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     return render(request, 'polls/result.html', {'question': question})
+
+class SignupView(generic.CreateView):
+    form_class = UserCreationForm
+    # 회원가입이 성공적으로 완료된 이후에는 'user-list' 뷰로 리디렉션되어,
+    # 새로 생성된 유저가 리스트에 포함되어 있는지 확인할 수 있다
+    success_url = reverse_lazy('user-list')
+    template_name = 'registration/signup.html'

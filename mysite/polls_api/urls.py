@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path,include
 from .views import *
 
 # 1. METHOD로 구현
@@ -23,4 +23,8 @@ urlpatterns = [
 urlpatterns = [ # QuestionDetail을 호출할 때 pk인 id가 필요
     path('question/', QuestionList.as_view(), name='question-list'),
     path('question/<int:pk>/', QuestionDetail.as_view(), name='question-detail'),
+    path('users/', UserList.as_view(),name='user-list'),
+    path('users/<int:pk>/', UserDetail.as_view()),
+    path('register/', RegisterUser.as_view()),
+    path('api-auth/', include('rest_framework.urls'))
 ]
